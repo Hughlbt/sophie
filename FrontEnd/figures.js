@@ -46,11 +46,11 @@ function generateCategoryMenu(categories) {
     // Vide le conteneur avant de le remplir
     categoryButtonsContainer.innerHTML = '';
 
-    // Ajoute le bouton "Tous les projets"
+    // Ajoute le bouton "Tous"
     const allButton = document.createElement('button');
     allButton.classList.add('category-button');
     allButton.setAttribute('data-category-id', 'all');
-    allButton.textContent = 'Tous les projets';
+    allButton.textContent = 'Tous';
     categoryButtonsContainer.appendChild(allButton);
 
     // Ajoute les boutons pour chaque catégorie
