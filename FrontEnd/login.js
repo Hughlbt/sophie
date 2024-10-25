@@ -10,7 +10,7 @@ loginForm.addEventListener('submit', function(event) {
     const password = document.getElementById('password').value;
 
     
-    fetch('https://ton-api.com/api/login', {
+    fetch('http://localhost:5678/api/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
