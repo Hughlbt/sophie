@@ -87,3 +87,18 @@ function filterWorksByCategory(categoryId) {
         })
         .catch(error => console.error('Erreur:', error));
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+    const modeEditionBanner = document.getElementById("mode-edition-banner");
+
+   
+    const token = localStorage.getItem("token");
+    
+    
+    if (token) {
+        modeEditionBanner.style.display = "block";
+    } else {
+        modeEditionBanner.style.display = "none";
+    }
+});
+

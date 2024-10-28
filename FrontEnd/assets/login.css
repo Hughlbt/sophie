@@ -217,7 +217,6 @@ form {
 }
 
 input {
-    width: 500 px;
     height: 35px;
     font-size: 1.2em;
     border: none;
@@ -247,7 +246,6 @@ button {
     height: 40px;
     gap: 0px;
     border-radius: 60px 60px 60px 60px;
-    opacity: 0px;
     color: white;
     background: #1D6154;
     font-family: 'syne';
