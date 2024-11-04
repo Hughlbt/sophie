@@ -109,6 +109,7 @@ section {
 
 body {
 	line-height: 1;
+	
 }
 
 ol,
@@ -139,6 +140,7 @@ table {
 
 #mode-edition-banner {
 	height: 59px;
+	width: ;
 	background-color: black;
 }
 
@@ -146,7 +148,7 @@ table {
 	color: white;
 	width: 45%;
 	text-align: end;
-	
+
 }
 
 #mode-edition-banner p {
@@ -160,9 +162,10 @@ table {
 	text-align: start;
 }
 
-#mode-edition-banner p,i {
-display: inline-block;	
-} 
+#mode-edition-banner p,
+i {
+	display: inline-block;
+}
 
 body {
 	max-width: 1140px;
@@ -313,7 +316,11 @@ a:hover {
 	text-align: center;
 	width: 58px;
 
+}
 
+.bouton-modifier:hover {
+	cursor: pointer;
+	color: #B1663C;
 
 }
 

@@ -99,7 +99,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (token) {
         console.log("Token trouvé, mode édition activé");
         modeEditionBanner.style.display = "block";
-        modeEdition[0].textContent = "Logout";
+        modeEdition[0].textContent = "logout";
         modeEditionCategory.style.display = "none";
         modeEditionModifier[0].style.display = "flex";
 
