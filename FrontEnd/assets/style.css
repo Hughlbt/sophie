@@ -142,15 +142,27 @@ table {
 	background-color: black;
 }
 
+#mode-edition-banner i {
+	color: white;
+	width: 45%;
+	text-align: end;
+	
+}
+
 #mode-edition-banner p {
 	padding-top: 15px;
 	color: white;
+	width: 50%;
 	font-family: Work Sans;
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 18.77px;
-	text-align: center;
+	text-align: start;
 }
+
+#mode-edition-banner p,i {
+display: inline-block;	
+} 
 
 body {
 	max-width: 1140px;
@@ -190,7 +202,8 @@ h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+
 }
 
 nav ul {
@@ -246,8 +259,10 @@ a:hover {
 }
 
 #portfolio h2 {
-	text-align: center;
+	text-align: end;
 	margin-bottom: 1em;
+	width: 57%;
+
 }
 
 #category-buttons {
@@ -276,6 +291,42 @@ a:hover {
 .category-button:hover {
 	background-color: #1D6154;
 	color: white;
+
+}
+
+#modifier {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 40%;
+	margin-left: 15px;
+
+}
+
+.bouton-modifier {
+	border: none;
+	background-color: #FFFEF8;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.42px;
+	text-align: center;
+	width: 58px;
+
+
+
+}
+
+.bouton-modifier i {
+	padding-right: 10px;
+
+}
+
+#portfolio h2,
+#modifier {
+	display: inline-block;
+	margin-bottom: 90px;
+	margin-top: 50px;
 
 }
 

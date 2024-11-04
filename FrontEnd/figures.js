@@ -91,7 +91,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const modeEditionBanner = document.getElementById("mode-edition-banner");
     const modeEdition = document.getElementsByClassName("mode-edition");
     const modeEditionCategory = document.getElementById("category-buttons");
-    const modeEditionModifier = document.getElementsByClassName("modifier");
+    const modeEditionModifier = document.getElementsByClassName("bouton-modifier");
     console.log(modeEdition);
     const token = localStorage.getItem("token");
 
