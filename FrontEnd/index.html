@@ -9,15 +9,17 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
-	<div id="mode-edition-banner" style="display: none;">
+	<div id="mode-edition-banner">
+		<i class="fa-regular fa-pen-to-square"></i>
 		<p>Mode édition</p>
 	</div>
-	
+
 	<header>
 
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -25,8 +27,7 @@
 			<ul>
 				<li>projets</li>
 				<li>contact</li>
-				<li><a href="login.html">login</a></li>
-				<!-- erreur j'avais fermé la balise a avec un href sans faire gaffe -->
+				<li><a class="mode-edition" href="login.html">login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -51,7 +52,10 @@
 			<h2>Mes Projets</h2>
 			<div id="category-buttons">
 				<button class="category-button" data-category-id="all">Tous</button>
-				<!-- Les autres boutons de catégorie seront ajoutés dynamiquement via JavaScript -->
+			</div>
+			<div>
+				<i class="fa-regular fa-pen-to-square"></i>
+				<button class="modifier">modifier</button>
 			</div>
 			<div class="gallery" id="galerie">
 				<!-- <figure>
@@ -114,7 +118,6 @@
 			</form>
 		</section>
 	</main>
-
 	<footer>
 		<nav>
 			<ul>
@@ -123,7 +126,7 @@
 		</nav>
 	</footer>
 	<script src="figures.js"></script>
-	
+
 
 
 </body>

@@ -35,6 +35,7 @@ loginForm.addEventListener('submit', function (event) {
 
             console.error('Erreur:', error);
             document.getElementById('error-message').textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+            localStorage.removeItem("token");
         });
 });
 

@@ -42,7 +42,6 @@ fetch('http://localhost:5678/api/categories')
 
 function generateCategoryMenu(categories) {
     const categoryButtonsContainer = document.getElementById('category-buttons');
-    // Vide le conteneur avant de le remplir
     categoryButtonsContainer.innerHTML = '';
 
 
@@ -90,15 +89,26 @@ function filterWorksByCategory(categoryId) {
 
 window.addEventListener("DOMContentLoaded", () => {
     const modeEditionBanner = document.getElementById("mode-edition-banner");
-
-   
+    const modeEdition = document.getElementsByClassName("mode-edition");
+    const modeEditionCategory = document.getElementById("category-buttons");
+    const modeEditionModifier = document.getElementsByClassName("modifier");
+    console.log(modeEdition);
     const token = localStorage.getItem("token");
-    
-    
+
+
     if (token) {
+        console.log("Token trouvé, mode édition activé");
         modeEditionBanner.style.display = "block";
+        modeEdition[0].textContent = "Logout";
+        modeEditionCategory.style.display = "none";
+        modeEditionModifier[0].style.display = "flex";
+
+
     } else {
+        console.log("Pas de token, mode édition désactivé");
         modeEditionBanner.style.display = "none";
+        modeEdition[0].textContent = "Login";
+        modeEditionModifier[0].style.display = "none";
     }
 });
 
