@@ -109,7 +109,7 @@ section {
 
 body {
 	line-height: 1;
-	
+
 }
 
 ol,
@@ -140,7 +140,6 @@ table {
 
 #mode-edition-banner {
 	height: 59px;
-	width: ;
 	background-color: black;
 }
 
@@ -334,6 +333,22 @@ a:hover {
 	display: inline-block;
 	margin-bottom: 90px;
 	margin-top: 50px;
+
+}
+
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.8);
+
+}
+
+.modal-wrapper {
+	background-color: white;
+	width: 60%;
 
 }
 
