@@ -9,7 +9,20 @@ const openModal = function (e) {
 
 }
 
+const closeModal = function (modal) {
+    modal.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+}
 
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModal)
+})
+
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) { // Vérifie si le clic est sur l'overlay
+            closeModal(modal);
+        }
+    })
 })
