@@ -6,7 +6,6 @@ const openModal = function (e) {
         target.removeAttribute('aria-hidden')
         target.setAttribute('aria-modal', 'true')
     }
-
 }
 
 const closeModal = function (modal) {
@@ -21,7 +20,7 @@ document.querySelectorAll('.js-modal').forEach(a => {
 
 document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', function (e) {
-        if (e.target === modal) { // Vérifie si le clic est sur l'overlay
+        if (e.target === modal) {
             closeModal(modal);
         }
     })
