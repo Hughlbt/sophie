@@ -8,6 +8,32 @@ const openModal = function (e) {
     }
 }
 
+fetch('http://localhost:5678/api/works')
+    .then(response => response.json())
+    .then(data => {
+        afficherModalGalerie(data);
+        return data;
+    })
+    .catch(error => console.error('Erreur:', error));
+
+
+function afficherModalGalerie(works) {
+    const galerie = document.getElementById('modal-galerie');
+    galerie.innerHTML = '';
+
+    works.forEach(work => {
+        const figure = document.createElement('figure');
+        const imgElement = document.createElement('img');
+        imgElement.src = work.imageUrl;
+        imgElement.alt = work.title || 'Image';
+        const figcaption = document.createElement('figcaption');
+        
+        figure.appendChild(imgElement);
+        figure.appendChild(figcaption);
+        galerie.appendChild(figure);
+    });
+}
+
 const closeModal = function (modal) {
     modal.style.display = "none";
     modal.setAttribute('aria-hidden', 'true');
@@ -25,3 +51,4 @@ document.querySelectorAll('.modal').forEach(modal => {
         }
     })
 })
+

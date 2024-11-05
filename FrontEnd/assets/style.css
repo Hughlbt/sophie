@@ -352,9 +352,59 @@ a:hover {
 .modal-wrapper {
 	background-color: white;
 	width: 25%;
-	height: 50%;
-	padding: 20px;
+	height: 60%;
 	border-radius: 8px;
+
+}
+
+.modal-close {
+	display: flex;
+	justify-content: flex-end;
+	background-color: white;
+	border: none;
+	position: absolute;
+}
+
+.modal h1 {
+	font-family: Work Sans;
+	font-size: 30px;
+	font-weight: 400;
+	line-height: 30.5px;
+	text-align: center;
+	color: black;
+	margin-top: 50px;
+}
+
+.modal-gallery {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-row-gap: 30px;
+	margin-top: 50px;
+	margin-left: 20px;
+	margin-right: 20px;
+	border-bottom: #1D6154 solid 0.8px;
+
+}
+
+.modal-gallery figure {
+	width: 90px;
+	height: 130px;
+
+}
+
+.modal-gallery img {
+	width: 90px;
+	height: 130px;
+}
+
+.ajout-photo {
+	margin-top: 50px;
+	margin-left: 170px;
+	width: 40%;
+	background-color: #1D6154;
+	color: white;
+	border-radius: 20px;
 }
 
 .gallery {
