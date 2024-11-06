@@ -336,6 +336,10 @@ a:hover {
 
 }
 
+.hidden {
+	display: none;
+}
+
 .modal {
 	display: flex;
 	position: fixed;
@@ -357,12 +361,25 @@ a:hover {
 
 }
 
+.modal-page1 {
+	width: 100%;
+	height: 100%;
+}
+
+.modal-page2 {
+	width: 100%;
+	height: 100%;
+}
+
 .modal-close {
-	display: flex;
-	justify-content: flex-end;
+
+	margin-left: 580px;
+	margin-top: 20px;
 	background-color: white;
+	font-family: Work Sans;
+	font-size: 23px;
+	font-weight: 400;
 	border: none;
-	position: absolute;
 }
 
 .modal h1 {
@@ -372,7 +389,7 @@ a:hover {
 	line-height: 30.5px;
 	text-align: center;
 	color: black;
-	margin-top: 50px;
+	margin-top: 70px;
 }
 
 .modal-gallery {
@@ -405,6 +422,29 @@ a:hover {
 	background-color: #1D6154;
 	color: white;
 	border-radius: 20px;
+	font-family: Work Sans;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+.retour {
+	margin-top: 10px;
+	margin-left: 20px;
+	background-color: white;
+	font-family: Work Sans;
+	font-size: 20px;
+	font-weight: 400;
+	border: none;
+}
+
+.valider {
+	display: flex;
+	justify-content: center;
+	background-color: white;
+	font-family: Work Sans;
+	font-size: 20px;
+	font-weight: 400;
+	border: none;
 }
 
 .gallery {
