@@ -14,7 +14,7 @@ fetch('http://localhost:5678/api/works')
         afficherModalGalerie(data);
         return data;
     })
-    .catch(error => console.error('Erreur:', error));
+    .catch(error => console.error('Erreur:', error))
 
 
 function afficherModalGalerie(works) {
@@ -27,7 +27,7 @@ function afficherModalGalerie(works) {
         imgElement.src = work.imageUrl;
         imgElement.alt = work.title || 'Image';
         const figcaption = document.createElement('figcaption');
-        
+
         figure.appendChild(imgElement);
         figure.appendChild(figcaption);
         galerie.appendChild(figure);
@@ -35,9 +35,9 @@ function afficherModalGalerie(works) {
 }
 
 const closeModal = function (modal) {
-    modal.style.display = "none";
-    modal.setAttribute('aria-hidden', 'true');
-    modal.removeAttribute('aria-modal');
+    modal.style.display = "none"
+    modal.setAttribute('aria-hidden', 'true')
+    modal.removeAttribute('aria-modal')
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
@@ -47,8 +47,16 @@ document.querySelectorAll('.js-modal').forEach(a => {
 document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', function (e) {
         if (e.target === modal) {
-            closeModal(modal);
+            closeModal(modal)
         }
     })
+
+    const closeButton = modal.querySelector('.modal-close');
+    if (closeButton) {
+        closeButton.addEventListener('click', function () {
+            closeModal(modal)
+        })
+    }
 })
+
 
