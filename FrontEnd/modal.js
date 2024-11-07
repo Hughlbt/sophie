@@ -27,12 +27,13 @@ document.querySelectorAll('.modal').forEach(modal => {
         }
     })
 
-    const closeButton = modal.querySelector('.modal-close');
-    if (closeButton) {
-        closeButton.addEventListener('click', function () {
-            closeModal(modal)
-        })
-    }
+    const closeButtons = modal.querySelectorAll('.modal-close1, .modal-close2');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            closeModal(modal);
+        });
+    });
+    
 
     const page1 = modal.querySelector('.modal-page1')
     const page2 = modal.querySelector('.modal-page2')
