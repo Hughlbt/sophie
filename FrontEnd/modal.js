@@ -71,7 +71,6 @@ function afficherModalGalerie() {
                 imgElement.src = work.imageUrl
                 imgElement.alt = work.title || 'Image'
                 const figcaption = document.createElement('figcaption')
-
                 figure.appendChild(imgElement)
                 figure.appendChild(figcaption)
                 galerie.appendChild(figure)
