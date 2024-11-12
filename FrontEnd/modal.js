@@ -128,4 +128,70 @@ function deleteWork(workId) { //Je ne comprend pas les points sous le "de"
         })
 }
 
-afficherModalGalerie()
+const addProject = document.getElementById('add-project')
+
+function afficherCategories() {
+    const categoriesSelect = document.getElementById('categories')
+    categoriesSelect.innerHTML = ''
+
+    fetch('http://localhost:5678/api/categories')
+        .then(response => {
+            if (!response.ok) throw new Error('Erreur lors de la récupération des catégories')
+            return response.json()
+        })
+        .then(categories => {
+            console.log('Catégories récupérées:', categories)
+            categories.forEach(category => {
+                const option = document.createElement('option')
+                option.value = category.name
+                option.textContent = category.name
+                categoriesSelect.appendChild(option)
+            })
+            console.log('Contenu du <select>:', categoriesSelect.innerHTML)
+        })
+        .catch(error => console.error('Erreur:', error))
+}
+
+
+function ajouterNouveauProjet(e) {
+    e.preventDefault()
+
+    const title = document.getElementById('title').value
+    const category = document.getElementById('categories').value
+    const image = document.getElementById('image').files[0]
+
+    if (!title || !category || !image) {
+        errorMessage.style.display = 'block'
+        errorMessage.textContent = 'Veuillez remplir tous les champs'
+        return
+    } else {
+        errorMessage.style.display = 'none'
+    }
+
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('category', category)
+    formData.append('image', image)
+
+    const token = localStorage.getItem('token')
+    console.log(localStorage.getItem('token'))
+    if (!token) {
+        alert("Token d'authentification manquant")
+        return
+    }
+
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    })
+        
+}
+
+
+addProject.addEventListener('submit', ajouterNouveauProjet)
+
+afficherCategories() 
+afficherModalGalerie() 

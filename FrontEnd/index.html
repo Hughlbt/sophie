@@ -72,25 +72,14 @@
 								<button class="modal-close2"> x</button>
 							</div>
 							<h1>Ajout photo</h1>
-							<div class="ajout-forme">
-								<i class="fa-solid fa-image"></i>
-								<button>+ Ajouter photo</button>
-								<p>jpg, png : 4mo max</p>
-							</div>
-							<div class="titre-photo">
-								<label for="title">Titre</label>
-								<input type="text" placeholder="">
-							</div>
-							<div class="categories-choix">
-								<label for="choices">Catégories</label>
-								<select id="categories" name="Catégories">
-									<option value="option1"></option>
-									<option value="option2">Objets</option>
-									<option value="option3">Appartements</option>
-									<option value="option4">Hotels & restaurants</option>
-								</select>
-							</div>
-							<button class="valider">Valider</button>
+							<form class="ajout-projet" id="add-project">
+								<input type="file" id="image" required>
+								<input type="text" id="title" placeholder="Titre" required>
+								<select id="categories" name="categories" required></select>
+								<button type="submit" class="valider">Valider</button>
+								<p id="errorMessage" style="display:none;color:red;"></p>
+							</form>
+							
 						</div>
 				</aside>
 			</div>
