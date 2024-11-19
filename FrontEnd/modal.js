@@ -63,6 +63,8 @@ function afficherModalGalerie() {
     const galerie = document.getElementById('modal-galerie')
     const galeriePrincipale = document.getElementById('galerie') //Me permet de selectionner l'élement id=galerie de mon HTML
 
+    galerie.innerHTML = ''
+
     fetch('http://localhost:5678/api/works')
         .then(response => response.json())
         .then(works => {
@@ -140,14 +142,13 @@ function afficherCategories() {
             return response.json()
         })
         .then(categories => {
-            console.log('Catégories récupérées:', categories)
             categories.forEach(category => {
                 const option = document.createElement('option')
-                option.value = category.name
+                option.value = category.id
                 option.textContent = category.name
                 categoriesSelect.appendChild(option)
             })
-            console.log('Contenu du <select>:', categoriesSelect.innerHTML)
+
         })
         .catch(error => console.error('Erreur:', error))
 }
@@ -161,6 +162,7 @@ function ajouterNouveauProjet(e) {
     const image = document.getElementById('image').files[0]
 
     if (!title || !category || !image) {
+        const errorMessage = document.getElementById('errorMessage')
         errorMessage.style.display = 'block'
         errorMessage.textContent = 'Veuillez remplir tous les champs'
         return
@@ -172,6 +174,8 @@ function ajouterNouveauProjet(e) {
     formData.append('title', title)
     formData.append('category', category)
     formData.append('image', image)
+
+    console.log('Données envoyées :', [...formData.entries()])
 
     const token = localStorage.getItem('token')
     console.log(localStorage.getItem('token'))
@@ -187,11 +191,23 @@ function ajouterNouveauProjet(e) {
         },
         body: formData
     })
-        
+        .then(response => {
+            if (!response.ok) return response.json().then(data => Promise.reject(data))
+            return response.json()
+        })
+        .then(data => {
+            alert('Projet ajouté !')
+            addProject.reset()
+            afficherModalGalerie()
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'envoi du formulaire:', error)
+            alert(`Erreur : ${error.message || 'Une erreur est survenue'}`)
+        })
 }
 
 
 addProject.addEventListener('submit', ajouterNouveauProjet)
 
-afficherCategories() 
+afficherCategories()
 afficherModalGalerie() 
