@@ -6,9 +6,9 @@ const openModal = function (e) {
         target.style.display = null
         target.removeAttribute('aria-hidden')
         target.setAttribute('aria-modal', 'true')
+        resetModal(target)
     }
 }
-
 
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModal)
@@ -18,6 +18,7 @@ const closeModal = function (modal) {
     modal.style.display = "none"
     modal.setAttribute('aria-hidden', 'true')
     modal.removeAttribute('aria-modal')
+    resetModal(modal) 
 }
 
 document.querySelectorAll('.modal').forEach(modal => {
@@ -57,6 +58,15 @@ document.querySelectorAll('.modal').forEach(modal => {
     })
 
 })
+
+function resetModal(modal) {
+    const page1 = modal.querySelector('.modal-page1')
+    const page2 = modal.querySelector('.modal-page2')
+    if (page1 && page2) {
+        page1.classList.remove('hidden')
+        page2.classList.add('hidden')
+    }
+} 
 
 
 function afficherModalGalerie() {
@@ -196,10 +206,27 @@ function ajouterNouveauProjet(e) {
             return response.json()
         })
         .then(data => {
-            alert('Projet ajouté !')
+            alert('Projet ajouté !') //A delete pour enlever la notif
             addProject.reset()
             afficherModalGalerie()
+
+            const galeriePrincipale = document.getElementById('galerie')
+            const newFigure = document.createElement('figure')
+            newFigure.setAttribute('data-id', data.id)
+
+            const imgElement = document.createElement('img')
+            imgElement.src = data.imageUrl
+            imgElement.alt = data.title || 'Image'
+
+            const figcaption = document.createElement('figcaption')
+            figcaption.textContent = data.title || 'Sans titre'
+
+            newFigure.appendChild(imgElement)
+            newFigure.appendChild(figcaption)
+
+            galeriePrincipale.appendChild(newFigure)
         })
+
         .catch(error => {
             console.error('Erreur lors de l\'envoi du formulaire:', error)
             alert(`Erreur : ${error.message || 'Une erreur est survenue'}`)
