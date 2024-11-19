@@ -18,7 +18,7 @@ const closeModal = function (modal) {
     modal.style.display = "none"
     modal.setAttribute('aria-hidden', 'true')
     modal.removeAttribute('aria-modal')
-    resetModal(modal) 
+    resetModal(modal)
 }
 
 document.querySelectorAll('.modal').forEach(modal => {
@@ -59,14 +59,14 @@ document.querySelectorAll('.modal').forEach(modal => {
 
 })
 
-function resetModal(modal) {
+function resetModal(modal) { //Permet de revenir sur la page 1 quand on ferme la modale
     const page1 = modal.querySelector('.modal-page1')
     const page2 = modal.querySelector('.modal-page2')
     if (page1 && page2) {
         page1.classList.remove('hidden')
         page2.classList.add('hidden')
     }
-} 
+}
 
 
 function afficherModalGalerie() {
@@ -79,26 +79,31 @@ function afficherModalGalerie() {
         .then(response => response.json())
         .then(works => {
             works.forEach(work => {
-                const figure = document.createElement('figure') //figure = <figure></figure>
+                const figure = document.createElement('figure')
                 figure.setAttribute('data-id', work.id)
+                figure.classList.add('image-container') // Ajoute la classe CSS personnalisée
                 const imgElement = document.createElement('img')
                 const deleteButton = document.createElement('button')
+                const icon = document.createElement('i')
                 imgElement.src = work.imageUrl
                 imgElement.alt = work.title || 'Image'
                 const figcaption = document.createElement('figcaption')
+
+                icon.classList.add('fas', 'fa-trash-can')  // Classe Font Awesome pour l'icône de la poubelle
+                deleteButton.appendChild(icon)  // On ajoute l'icône au bouton
+                deleteButton.classList.add('delete-button')
+
                 figure.appendChild(imgElement)
                 figure.appendChild(figcaption)
                 figure.appendChild(deleteButton)
                 galerie.appendChild(figure)
 
-
-                deleteButton.textContent = 'Delete'
                 deleteButton.addEventListener('click', () => {
-                    deleteWork(work.id) //J'appelle la fonction deleteWork() qui envoi un requette pour supprimer l'image qui a l'id correspondant
+                    deleteWork(work.id) //Appelle la fonction deleteWork() qui envoi un requette pour supprimer l'image qui a l'id correspondant
                         .then(() => {
                             const imageToDelete = galeriePrincipale.querySelector(`[data-id="${work.id}"]`)
                             if (imageToDelete) {
-                                imageToDelete.remove() //devrait supprimer l'élément dynamqiquement de la gallerie principale
+                                imageToDelete.remove() //Supprime l'élément dynamqiquement de la gallerie principale
                             }
                             figure.remove() // permet de supprimer dynamiquement l'élément de la modale
                         })
@@ -107,8 +112,6 @@ function afficherModalGalerie() {
         })
         .catch(error => console.error('Erreur:', error)) // permet d'attraper l'erreur et de l'afficher dans la console
 }
-
-//Recupérer tous les boutons faire une boucle et utiliser le addeventlistener dessus
 
 function deleteWork(workId) { //Je ne comprend pas les points sous le "de"
     const token = localStorage.getItem('token') //Recup du token
@@ -119,7 +122,7 @@ function deleteWork(workId) { //Je ne comprend pas les points sous le "de"
 
     return fetch(`http://localhost:5678/api/works/${workId}`, { // si le token est présent
         method: 'DELETE',
-        headers: { // Nous permets d'avoir l'autorisation et évite une erreur 401
+        headers: { // Nous permet d'avoir l'autorisation et évite une erreur 401
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
@@ -201,12 +204,12 @@ function ajouterNouveauProjet(e) {
         },
         body: formData
     })
-        .then(response => {
+        .then(response => { //Idem je ne comprend pas les ...
             if (!response.ok) return response.json().then(data => Promise.reject(data))
             return response.json()
         })
         .then(data => {
-            alert('Projet ajouté !') //A delete pour enlever la notif
+            alert('Projet ajouté !') //A supprimer pour enlever la notif
             addProject.reset()
             afficherModalGalerie()
 
