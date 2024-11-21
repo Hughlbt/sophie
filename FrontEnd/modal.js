@@ -28,12 +28,12 @@ document.querySelectorAll('.modal').forEach(modal => {
         }
     })
 
-    const closeButtons = modal.querySelectorAll('.modal-close1, .modal-close2');
+    const closeButtons = modal.querySelectorAll('.modal-close1, .modal-close2')
     closeButtons.forEach(button => {
         button.addEventListener('click', function () {
-            closeModal(modal);
-        });
-    });
+            closeModal(modal)
+        })
+    })
 
 
     const page1 = modal.querySelector('.modal-page1')
@@ -64,7 +64,7 @@ function resetModal(modal) {
     const page2 = modal.querySelector('.modal-page2')
     const imageContainer = modal.querySelector('#image-container')
     const fileLabel = modal.querySelector('label[for="image"]')
-    const sizeLimitText = modal.querySelector('p');
+    const sizeLimitText = modal.querySelector('p')
 
     if (page1 && page2) {
         page1.classList.remove('hidden')
@@ -73,13 +73,13 @@ function resetModal(modal) {
 
     const imagePreview = imageContainer.querySelector('img')
     if (imagePreview) {
-        imagePreview.remove()  
+        imagePreview.remove()
     }
 
     fileLabel.textContent = '+ Ajouter photo'
-    sizeLimitText.style.display = 'block'  
+    sizeLimitText.style.display = 'block'
     imageContainer.classList.remove('hidden')
-    
+
 
 }
 
@@ -168,7 +168,7 @@ function configurerImage() {
     imageContainer.appendChild(imageIcon)
 
     const fileLabel = document.createElement('label')
-    fileLabel.textContent = '+ Ajouter photo' 
+    fileLabel.textContent = '+ Ajouter photo'
     fileLabel.setAttribute('for', 'image')
     imageContainer.appendChild(fileLabel)
 
@@ -176,7 +176,7 @@ function configurerImage() {
     fileInput.type = 'file'
     fileInput.id = 'image'
     fileInput.required = true
-    fileInput.style.display = 'none' 
+    fileInput.style.display = 'none'
     imageContainer.appendChild(fileInput)
 
     const sizeLimitText = document.createElement('p')
@@ -186,8 +186,8 @@ function configurerImage() {
     imageContainer.appendChild(sizeLimitText)
 
     fileLabel.addEventListener('click', (event) => {
-        event.preventDefault()  
-        fileInput.click()      
+        event.preventDefault()
+        fileInput.click()
     })
 
     fileInput.addEventListener('change', () => {
@@ -236,8 +236,8 @@ function afficherCategories() {
     const defaultOption = document.createElement('option')
     defaultOption.value = ''
     defaultOption.textContent = ''
-    defaultOption.disabled = true 
-    defaultOption.selected = true 
+    defaultOption.disabled = true
+    defaultOption.selected = true
     categoriesSelect.appendChild(defaultOption)
 
     fetch('http://localhost:5678/api/categories')
