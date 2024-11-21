@@ -356,7 +356,7 @@ a:hover {
 .modal-wrapper {
 	background-color: white;
 	width: 25%;
-	height: 60%;
+	height: 55%;
 	border-radius: 8px;
 
 }
@@ -380,6 +380,7 @@ a:hover {
 	font-size: 23px;
 	font-weight: 400;
 	border: none;
+	cursor: pointer;
 }
 
 .modal h1 {
@@ -407,14 +408,14 @@ a:hover {
 }
 
 .modal-gallery figure {
-	width: 90px;
-	height: 130px;
+	width: 80px;
+	height: 115px;
 
 }
 
 .modal-gallery img {
-	width: 90px;
-	height: 130px;
+	width: 80px;
+	height: 115px;
 }
 
 .image-container {
@@ -434,7 +435,7 @@ a:hover {
 	color: white;
 }
 
-/* Changement de couleur au survol */
+
 .delete-button:hover {
 	color: grey;
 }
@@ -450,7 +451,7 @@ a:hover {
 	font-family: Work Sans;
 	font-size: 17px;
 	font-weight: 300;
-
+	cursor: pointer;
 }
 
 .bandeau {
@@ -468,7 +469,7 @@ a:hover {
 	font-size: 20px;
 	font-weight: 400;
 	border: none;
-
+	cursor: pointer;
 }
 
 .modal-close2 {
@@ -479,115 +480,107 @@ a:hover {
 	font-size: 23px;
 	font-weight: 400;
 	border: none;
+	cursor: pointer;
 }
 
-.ajout-forme {
+#add-project {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-left: 100px;
-	width: 70%;
-	height: 25%;
-	background: #E8F1F6;
-	gap: 10px;
 }
 
-.ajout-forme i {
-
-	width: 68.14px;
-	height: 59.62px;
-	background: #B9C5CC;
-
-}
-
-
-
-.ajout-forme button {
-
-	width: 173px;
-	height: 36px;
-	border-radius: 50px;
-	background: #CBD6DC;
-	border: none;
-	font-family: Work Sans;
-	font-size: 14px;
-	line-height: 16.42px;
-	color: #306685;
-
-}
-
-.ajout-forme button:hover {
-	cursor: pointer;
-
-}
-
-.ajout-forme p {
-
-	font-size: 10px;
-	font-weight: 400;
-	line-height: 11.73px;
-	text-align: center;
-	color: #444444;
-
-}
-
-.titre-photo {
-	margin-top: 25px;
-}
-
-.titre-photo label {
-	margin-left: 100px;
-	font-family: Work Sans;
-	font-size: 14px;
-	font-weight: 400;
-}
-
-
-.titre-photo input {
-
-	width: 70%;
-	height: 50px;
-	margin-left: 100px;
-	margin-top: 15px;
-	border: none;
-	box-shadow: 0px 4px 14px 0px #00000017;
-
-}
-
-.categories-choix {
+#image-container {
 	display: flex;
 	flex-direction: column;
-
 	justify-content: center;
+	align-items: center;
+	margin: 15px;
+	margin-bottom: 35px;
 	width: 70%;
-	margin-top: 25px;
-	margin-left: 16%;
-	border-bottom: 1px solid #B3B3B3;
-	padding-bottom: 50px;
-
+	height: 169px;
+	top: 786px;
+	left: 510px;
+	gap: 0px;
+	border-radius: 3px 0px 0px 0px;
+	opacity: 0px;
+	background: #E8F1F6;
 }
 
-.categories-choix label {
+#image-container i {
+    font-size: 60px; 
+    color: #B9C5CC; 
+}
 
+#image-container label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 15px;
+	margin-bottom: 12px;
+	height: 30%;
+	width: 50%;
+	gap: 0px;
+	border-radius: 50px 50px 50px 50px;
 	font-family: Work Sans;
-	font-size: 14px;
-	font-weight: 400;
+	font-size: 17px;
+	font-weight: 500;
+	color: #306685;
+	background-color: #B9C5CC;
+	cursor: pointer;
+}
+
+#image-container p {
+	color:#444444;
+}
+
+#image-container.hidden > *:not(img){
+    display: none; 
+}
+
+#image-container img {
+    max-width: 100%; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#title {
+	margin-bottom: 35px;
+	padding: 0%;
+	width: 70%;
+	height: 50px;
+	border: none;
+	box-shadow: 0px 4px 14px 0px #00000017;
 }
 
 #categories {
-	margin-top: 15px;
-	width: 100%;
+	width: 70%;
 	height: 50px;
 	border: none;
 	box-shadow: 0px 4px 14px 0px #00000017;
+	margin-bottom: 30px;
+}
 
+.line {
+	margin-top: 30px;
+	width: 70%;
+	border-bottom: 1px solid #B3B3B3;
+}
 
+#add-project h3 {
+	width: 85%;
+	padding-left: 15%;
+	margin-bottom: 12px;
+	font-family: Work Sans;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 16.42px;
+	text-align: left;
 }
 
 .valider {
 	margin-top: 40px;
-	margin-left: 190px;
 	padding: 5px;
 	width: 40%;
 	background-color: #1D6154;
@@ -596,6 +589,7 @@ a:hover {
 	font-family: Work Sans;
 	font-size: 17px;
 	font-weight: 300;
+	cursor: pointer;
 }
 
 .gallery {

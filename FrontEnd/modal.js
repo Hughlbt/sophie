@@ -59,13 +59,28 @@ document.querySelectorAll('.modal').forEach(modal => {
 
 })
 
-function resetModal(modal) { //Permet de revenir sur la page 1 quand on ferme la modale
+function resetModal(modal) {
     const page1 = modal.querySelector('.modal-page1')
     const page2 = modal.querySelector('.modal-page2')
+    const imageContainer = modal.querySelector('#image-container')
+    const fileLabel = modal.querySelector('label[for="image"]')
+    const sizeLimitText = modal.querySelector('p');
+
     if (page1 && page2) {
         page1.classList.remove('hidden')
         page2.classList.add('hidden')
     }
+
+    const imagePreview = imageContainer.querySelector('img')
+    if (imagePreview) {
+        imagePreview.remove()  
+    }
+
+    fileLabel.textContent = '+ Ajouter photo'
+    sizeLimitText.style.display = 'block'  
+    imageContainer.classList.remove('hidden')
+    
+
 }
 
 
@@ -143,11 +158,87 @@ function deleteWork(workId) { //Je ne comprend pas les points sous le "de"
         })
 }
 
-const addProject = document.getElementById('add-project')
+
+
+function configurerImage() {
+    const imageContainer = document.getElementById('image-container')
+
+    const imageIcon = document.createElement('i')
+    imageIcon.classList.add('fa-regular', 'fa-image')
+    imageContainer.appendChild(imageIcon)
+
+    const fileLabel = document.createElement('label')
+    fileLabel.textContent = '+ Ajouter photo' 
+    fileLabel.setAttribute('for', 'image')
+    imageContainer.appendChild(fileLabel)
+
+    const fileInput = document.createElement('input')
+    fileInput.type = 'file'
+    fileInput.id = 'image'
+    fileInput.required = true
+    fileInput.style.display = 'none' 
+    imageContainer.appendChild(fileInput)
+
+    const sizeLimitText = document.createElement('p')
+    sizeLimitText.textContent = 'jpg, png : 4mo max'
+    sizeLimitText.style.fontSize = '0.8em'
+    sizeLimitText.style.color = 'gray'
+    imageContainer.appendChild(sizeLimitText)
+
+    fileLabel.addEventListener('click', (event) => {
+        event.preventDefault()  
+        fileInput.click()      
+    })
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0]
+        if (file) {
+            fileLabel.textContent = ''
+
+            sizeLimitText.style.display = 'none'
+
+            const existingImagePreview = imageContainer.querySelector('img')
+            if (existingImagePreview) {
+                existingImagePreview.remove()
+            }
+
+            const imagePreview = document.createElement('img')
+            imagePreview.src = URL.createObjectURL(file)
+            imagePreview.alt = file.name
+            imagePreview.style.maxWidth = '100px'
+            imagePreview.style.marginTop = '10px'
+            imageContainer.appendChild(imagePreview)
+            imageContainer.classList.add('hidden')
+        } else {
+            fileLabel.textContent = '+ Ajouter photo'
+            sizeLimitText.style.display = 'block'
+
+        }
+    })
+}
+
+function configurerTitre() {
+    const titleInput = document.getElementById('title')
+    const titleLabel = document.createElement('label')
+    titleLabel.setAttribute('for', 'title')
+    titleInput.parentNode.insertBefore(titleLabel, titleInput)
+}
 
 function afficherCategories() {
     const categoriesSelect = document.getElementById('categories')
     categoriesSelect.innerHTML = ''
+
+    const labelCategories = document.createElement('label')
+    labelCategories.setAttribute('for', 'categories')
+    labelCategories.textContent = ''
+    categoriesSelect.parentNode.insertBefore(labelCategories, categoriesSelect)
+
+    const defaultOption = document.createElement('option')
+    defaultOption.value = ''
+    defaultOption.textContent = ''
+    defaultOption.disabled = true 
+    defaultOption.selected = true 
+    categoriesSelect.appendChild(defaultOption)
 
     fetch('http://localhost:5678/api/categories')
         .then(response => {
@@ -161,83 +252,92 @@ function afficherCategories() {
                 option.textContent = category.name
                 categoriesSelect.appendChild(option)
             })
-
         })
         .catch(error => console.error('Erreur:', error))
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    function ajouterNouveauProjet(e) {
+        e.preventDefault()
 
-function ajouterNouveauProjet(e) {
-    e.preventDefault()
+        const title = document.getElementById('title').value
+        const category = document.getElementById('categories').value
+        const image = document.getElementById('image').files[0]
 
-    const title = document.getElementById('title').value
-    const category = document.getElementById('categories').value
-    const image = document.getElementById('image').files[0]
+        if (!title || !category || !image) {
+            const errorMessage = document.getElementById('errorMessage')
+            errorMessage.style.display = 'block'
+            errorMessage.textContent = 'Veuillez remplir tous les champs'
+            return
+        } else {
+            errorMessage.style.display = 'none'
+        }
 
-    if (!title || !category || !image) {
-        const errorMessage = document.getElementById('errorMessage')
-        errorMessage.style.display = 'block'
-        errorMessage.textContent = 'Veuillez remplir tous les champs'
-        return
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('category', category)
+        formData.append('image', image)
+
+        const token = localStorage.getItem('token')
+        if (!token) {
+            alert("Token d'authentification manquant")
+            return
+        }
+
+        fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        })
+            .then(response => { //Je comprends pas les ...
+                if (!response.ok) return response.json().then(data => Promise.reject(data))
+                return response.json()
+            })
+            .then(data => {
+                alert('Projet ajouté !') // À supprimer pour enlever la notification
+                addProject.reset() // Réinitialise le formulaire
+
+                const imageContainer = document.getElementById('image-container')
+                const imagePreview = imageContainer.querySelector('img')
+                if (imagePreview) {
+                    imagePreview.remove()
+                }
+
+                afficherModalGalerie()
+
+                const galeriePrincipale = document.getElementById('galerie')
+                const newFigure = document.createElement('figure')
+                newFigure.setAttribute('data-id', data.id)
+
+                const imgElement = document.createElement('img')
+                imgElement.src = data.imageUrl
+                imgElement.alt = data.title || 'Image'
+
+                const figcaption = document.createElement('figcaption')
+                figcaption.textContent = data.title || 'Sans titre';
+
+                newFigure.appendChild(imgElement)
+                newFigure.appendChild(figcaption)
+
+                galeriePrincipale.appendChild(newFigure)
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi du formulaire:', error)
+                alert(`Erreur : ${error.message || 'Une erreur est survenue'}`)
+            })
+    }
+
+    const addProject = document.getElementById('add-project')
+    if (addProject) {
+        addProject.addEventListener('submit', ajouterNouveauProjet)
     } else {
-        errorMessage.style.display = 'none'
+        console.error("Formulaire d'ajout de projet introuvable")
     }
 
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('category', category)
-    formData.append('image', image)
-
-    console.log('Données envoyées :', [...formData.entries()])
-
-    const token = localStorage.getItem('token')
-    console.log(localStorage.getItem('token'))
-    if (!token) {
-        alert("Token d'authentification manquant")
-        return
-    }
-
-    fetch('http://localhost:5678/api/works', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        },
-        body: formData
-    })
-        .then(response => { //Idem je ne comprend pas les ...
-            if (!response.ok) return response.json().then(data => Promise.reject(data))
-            return response.json()
-        })
-        .then(data => {
-            alert('Projet ajouté !') //A supprimer pour enlever la notif
-            addProject.reset()
-            afficherModalGalerie()
-
-            const galeriePrincipale = document.getElementById('galerie')
-            const newFigure = document.createElement('figure')
-            newFigure.setAttribute('data-id', data.id)
-
-            const imgElement = document.createElement('img')
-            imgElement.src = data.imageUrl
-            imgElement.alt = data.title || 'Image'
-
-            const figcaption = document.createElement('figcaption')
-            figcaption.textContent = data.title || 'Sans titre'
-
-            newFigure.appendChild(imgElement)
-            newFigure.appendChild(figcaption)
-
-            galeriePrincipale.appendChild(newFigure)
-        })
-
-        .catch(error => {
-            console.error('Erreur lors de l\'envoi du formulaire:', error)
-            alert(`Erreur : ${error.message || 'Une erreur est survenue'}`)
-        })
-}
-
-
-addProject.addEventListener('submit', ajouterNouveauProjet)
-
-afficherCategories()
-afficherModalGalerie() 
+    configurerImage()
+    configurerTitre()
+    afficherCategories()
+    afficherModalGalerie()
+})

@@ -73,13 +73,16 @@
 							</div>
 							<h1>Ajout photo</h1>
 							<form class="ajout-projet" id="add-project">
-								<input type="file" id="image" required>
-								<input type="text" id="title" placeholder="Titre" required>
+								<div id="image-container"></div>
+								<h3>Titre</h3>
+								<input type="text" id="title" placeholder="" required>
+								<h3>Catégories</h3>
 								<select id="categories" name="categories" required></select>
+								<div class="line"></div>
 								<button type="submit" class="valider">Valider</button>
 								<p id="errorMessage" style="display:none;color:red;"></p>
 							</form>
-							
+
 						</div>
 				</aside>
 			</div>
