@@ -661,12 +661,12 @@ footer {
 	height: 100px;
 	display: flex;
 	justify-content: end;
-	justify-content: center;
     align-items: center;
     width: 1440px; /* Largeur fixe */
     margin-left: calc((100% - 1440px) / 2); /* Centrage horizontal */
-
 }
+
+
 
 footer nav ul {
 	display: flex;

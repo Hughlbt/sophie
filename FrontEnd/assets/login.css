@@ -274,13 +274,14 @@ a:hover {
 }
 
 footer {
-    margin-top: 220px;
-    background: white;
-    width: auto;
-    height: 100px;
-    display: flex;
-    justify-content: end;
-
+	background: white;
+	width: auto;
+	height: 100px;
+	display: flex;
+	justify-content: end;
+    align-items: center;
+    width: 1440px; /* Largeur fixe */
+    margin-left: calc((100% - 1440px) / 2); /* Centrage horizontal */
 }
 
 footer nav ul {
