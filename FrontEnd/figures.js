@@ -7,7 +7,6 @@ fetch('http://localhost:5678/api/works')
     })
     .catch(error => console.error('Erreur:', error))
 
-
 function afficherGalerie(works) {
     const galerie = document.getElementById('galerie')
     galerie.innerHTML = ''
@@ -22,7 +21,7 @@ function afficherGalerie(works) {
         figure.appendChild(imgElement)
         figure.appendChild(figcaption)
         galerie.appendChild(figure)
-    });
+    })
 }
 
 // Récupérer les catégories
@@ -43,13 +42,11 @@ function generateCategoryMenu(categories) {
     const categoryButtonsContainer = document.getElementById('category-buttons')
     categoryButtonsContainer.innerHTML = ''
 
-
     const allButton = document.createElement('button')
     allButton.classList.add('category-button')
     allButton.setAttribute('data-category-id', 'all')
     allButton.textContent = 'Tous'
     categoryButtonsContainer.appendChild(allButton)
-
 
     categories.forEach(category => {
         const button = document.createElement('button')
@@ -57,9 +54,8 @@ function generateCategoryMenu(categories) {
         button.setAttribute('data-category-id', category.id)
         button.textContent = category.name
         categoryButtonsContainer.appendChild(button)
-    });
+    })
 }
-
 
 function addCategoryButtonListeners() {
     const buttons = document.querySelectorAll('.category-button')
@@ -67,10 +63,9 @@ function addCategoryButtonListeners() {
         button.addEventListener('click', function () {
             const selectedCategoryId = this.getAttribute('data-category-id')
             filterWorksByCategory(selectedCategoryId)
-        });
-    });
+        })
+    })
 }
-
 
 function filterWorksByCategory(categoryId) {
     fetch('http://localhost:5678/api/works')
@@ -94,14 +89,12 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log(modeEdition);
     const token = localStorage.getItem("token")
 
-
     if (token) {
         console.log("Token trouvé, mode édition activé")
         modeEditionBanner.style.display = "block"
         modeEdition[0].textContent = "logout"
         modeEditionCategory.style.display = "none"
         modeEditionModifier[0].style.display = "flex"
-
 
     } else {
         console.log("Pas de token, mode édition désactivé")
@@ -110,27 +103,23 @@ window.addEventListener("DOMContentLoaded", () => {
         modeEditionModifier[0].style.display = "none"
     }
 
-
     function logout() {
 
         localStorage.removeItem("token")
         console.log("Déconnecté, token supprimé")
-
-
         window.location.href = "index.html"
     }
-
 
     const loginLogoutButton = document.querySelector('.mode-edition');
     if (loginLogoutButton) {
         loginLogoutButton.addEventListener('click', function (event) {
 
             if (loginLogoutButton.textContent.toLowerCase() === 'logout') {
-                event.preventDefault();
-                logout();
+                event.preventDefault()
+                logout()
             }
-        });
+        })
     }
 
-});
+})
 

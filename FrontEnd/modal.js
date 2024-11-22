@@ -18,7 +18,7 @@ const closeModal = function (modal) {
     modal.style.display = "none"
     modal.setAttribute('aria-hidden', 'true')
     modal.removeAttribute('aria-modal')
-    resetModal(modal)
+    resetForm(modal)
 }
 
 document.querySelectorAll('.modal').forEach(modal => {
@@ -48,16 +48,45 @@ document.querySelectorAll('.modal').forEach(modal => {
         nextPageButton.addEventListener('click', function () {
             page1.classList.add('hidden')
             page2.classList.remove('hidden')
+            resetForm(modal)
         })
     }
 
     returnButton.addEventListener('click', function () {
         page2.classList.add('hidden')
         page1.classList.remove('hidden')
-
+        resetForm(modal)
     })
-
 })
+
+function resetForm(modal) {
+    const titleInput = modal.querySelector('#title')
+    const categorySelect = modal.querySelector('#categories')
+    const imageInput = modal.querySelector('#image')
+
+    if (titleInput) {
+        titleInput.value = ''
+    }
+    if (categorySelect) {
+        categorySelect.value = ''
+    }
+    if (imageInput) {
+        imageInput.value = '' 
+    }
+
+    const imageContainer = modal.querySelector('#image-container')
+    const imagePreview = imageContainer.querySelector('img')
+    if (imagePreview) {
+        imagePreview.remove()
+    }
+
+    const fileLabel = modal.querySelector('label[for="image"]')
+    fileLabel.textContent = '+ Ajouter photo'
+
+    const sizeLimitText = modal.querySelector('p')
+    sizeLimitText.style.display = 'block'
+    imageContainer.classList.remove('hidden')
+}
 
 function resetModal(modal) {
     const page1 = modal.querySelector('.modal-page1')
@@ -79,15 +108,11 @@ function resetModal(modal) {
     fileLabel.textContent = '+ Ajouter photo'
     sizeLimitText.style.display = 'block'
     imageContainer.classList.remove('hidden')
-
-
 }
-
 
 function afficherModalGalerie() {
     const galerie = document.getElementById('modal-galerie')
     const galeriePrincipale = document.getElementById('galerie') //Me permet de selectionner l'élement id=galerie de mon HTML
-
     galerie.innerHTML = ''
 
     fetch('http://localhost:5678/api/works')
@@ -114,21 +139,49 @@ function afficherModalGalerie() {
                 galerie.appendChild(figure)
 
                 deleteButton.addEventListener('click', () => {
-                    deleteWork(work.id) //Appelle la fonction deleteWork() qui envoi un requette pour supprimer l'image qui a l'id correspondant
+                    console.log(`Tentative de suppression de l'image avec l'id ${work.id}`)
+                    deleteWork(work.id)
                         .then(() => {
-                            const imageToDelete = galeriePrincipale.querySelector(`[data-id="${work.id}"]`)
-                            if (imageToDelete) {
-                                imageToDelete.remove() //Supprime l'élément dynamqiquement de la gallerie principale
-                            }
-                            figure.remove() // permet de supprimer dynamiquement l'élément de la modale
+                            figure.remove()
+                            afficherGaleriePrincipale()
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors de la suppression:', error)
+                            alert('Une erreur est survenue lors de la suppression.')
                         })
                 })
             })
         })
-        .catch(error => console.error('Erreur:', error)) // permet d'attraper l'erreur et de l'afficher dans la console
+        .catch(error => console.error('Erreur:', error))
 }
 
-function deleteWork(workId) { //Je ne comprend pas les points sous le "de"
+function afficherGaleriePrincipale() {
+    const galeriePrincipale = document.getElementById('galerie')
+    galeriePrincipale.innerHTML = ''
+
+    fetch('http://localhost:5678/api/works')
+        .then(response => response.json())
+        .then(works => {
+            works.forEach(work => {
+                const figure = document.createElement('figure')
+                figure.setAttribute('data-id', work.id)
+                const imgElement = document.createElement('img')
+                imgElement.src = work.imageUrl
+                imgElement.alt = work.title || 'Image'
+
+                const figcaption = document.createElement('figcaption')
+                figcaption.textContent = work.title || 'Sans titre'
+
+                figure.appendChild(imgElement)
+                figure.appendChild(figcaption)
+
+                galeriePrincipale.appendChild(figure)
+            })
+        })
+        .catch(error => console.error('Erreur lors de la récupération des travaux:', error))
+}
+
+function deleteWork(workId) {
     const token = localStorage.getItem('token') //Recup du token
     if (!token) { // si il est absent 
         console.error("Token d'authentification manquant")
@@ -142,7 +195,7 @@ function deleteWork(workId) { //Je ne comprend pas les points sous le "de"
             'Content-Type': 'application/json'
         }
     })
-        .then(response => { // Permet d'avoir les différentes réponses via la console, cela "facultatif" 
+        .then(response => { // Permet d'avoir les différentes réponses via la console
             console.log('Réponse du serveur:', response)
             if (response.ok) {
                 console.log(`Image avec id ${workId} supprimée`)
@@ -194,7 +247,6 @@ function configurerImage() {
         const file = fileInput.files[0]
         if (file) {
             fileLabel.textContent = ''
-
             sizeLimitText.style.display = 'none'
 
             const existingImagePreview = imageContainer.querySelector('img')
@@ -212,7 +264,6 @@ function configurerImage() {
         } else {
             fileLabel.textContent = '+ Ajouter photo'
             sizeLimitText.style.display = 'block'
-
         }
     })
 }
@@ -291,14 +342,12 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: formData
         })
-            .then(response => { //Je comprends pas les ...
+            .then(response => {
                 if (!response.ok) return response.json().then(data => Promise.reject(data))
                 return response.json()
             })
             .then(data => {
                 alert('Projet ajouté !') // À supprimer pour enlever la notification
-                addProject.reset() // Réinitialise le formulaire
-
                 const imageContainer = document.getElementById('image-container')
                 const imagePreview = imageContainer.querySelector('img')
                 if (imagePreview) {
@@ -316,12 +365,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgElement.alt = data.title || 'Image'
 
                 const figcaption = document.createElement('figcaption')
-                figcaption.textContent = data.title || 'Sans titre';
+                figcaption.textContent = data.title || 'Sans titre'
 
                 newFigure.appendChild(imgElement)
                 newFigure.appendChild(figcaption)
 
                 galeriePrincipale.appendChild(newFigure)
+
+                const modal = document.querySelector('.modal')
+                resetForm(modal)
             })
             .catch(error => {
                 console.error('Erreur lors de l\'envoi du formulaire:', error)
