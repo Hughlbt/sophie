@@ -71,7 +71,7 @@ function resetForm(modal) {
         categorySelect.value = ''
     }
     if (imageInput) {
-        imageInput.value = '' 
+        imageInput.value = ''
     }
 
     const imageContainer = modal.querySelector('#image-container')
